@@ -28,7 +28,7 @@
 (defchan map-pipe       [f out]        (->> i f))
 (defchan window-pipe    [width out]    (->> i (swap! self conj-window width)) [self (atom [])])
 (defchan multicast-pipe [& outs]       (->> i (>! (:chan out)) (doseq [out outs])))
-(defchan atom-sink      [init]         (->> i (reset! value)) [value (atom init)] [:value value])
+(defchan atom-sink      [value]        (->> i (reset! value)) [value (if (instance? clojure.lang.Atom value) value (atom value))] [:atom value])
 (defchan redis-sink     [key & [spec]] (->> i (hash-map :redis-source-id redis-source-id :value) (car/publish key) (car/wcar conn))
   [conn {:pool {} :spec (merge redis-defaults spec)}])
 
@@ -45,3 +45,4 @@
                                       (if (map? %) (assoc % :timestamp ts)
                                                    {:timestamp ts :value %}))
                                     (map-pipe out)))
+

@@ -1,4 +1,4 @@
-(defproject org.clojars.nikonyrh.channels-clj "0.2.0"
+(defproject org.clojars.nikonyrh.channels-clj "0.2.1"
   :description "core.async-based utilities for creating data sources, pipes and sinks."
   :url         "https://github.com/nikonyrh/channels-clj"
   :license {:name "Apache License, Version 2.0"
